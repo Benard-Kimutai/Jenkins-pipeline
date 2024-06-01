@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    environment {
+        DIRECTORY_PATH = "/path/to/code"
+        TESTING_ENVIRONMENT = "staging"
+        PRODUCTION_ENVIRONMENT = "yourname"
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    echo "Building the code using Maven..."
+                    // Here you would add the actual Maven command, e.g., sh 'mvn clean install'
+                }
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                script {
+                    echo "Running unit tests with JUnit..."
+                    echo "Running integration tests with JUnit..."
+                    // Here you would add the actual test commands, e.g., sh 'mvn test'
+                }
+            }
+        }
+        stage('Code Analysis') {
+            steps {
+                script {
+                    echo "Analyzing code quality with SonarQube..."
+                    // Here you would add the actual SonarQube analysis command, e.g., sh 'mvn sonar:sonar'
+                }
+            }
+        }
+        stage('Security Scan') {
+            steps {
+                script {
+                    echo "Performing security scan with OWASP Dependency Check..."
+                    // Here you would add the actual security scan command, e.g., sh 'dependency-check.sh --project myproject --scan .'
+                }
+            }
+        }
+        stage('Deploy to Staging') {
+            steps {
+                script {
+                    echo "Deploying the application to the staging environment on AWS EC2..."
+                    // Here you would add the actual deployment command, e.g., sh 'scp target/myapp.war ec2-user@staging-server:/var/www/myapp'
+                }
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                script {
+                    echo "Running integration tests on the staging environment..."
+                    // Here you would add the actual integration test commands, e.g., sh 'mvn verify -Pstaging'
+                }
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                script {
+                    echo "Deploying the application to the production environment on AWS EC2..."
+                    // Here you would add the actual deployment command, e.g., sh 'scp target/myapp.war ec2-user@production-server:/var/www/myapp'
+                }
+            }
+        }
+    }
+}
